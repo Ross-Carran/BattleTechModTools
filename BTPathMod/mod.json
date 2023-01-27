@@ -1,0 +1,5 @@
+{
+  "Name": "BTPathMod",
+  "DLL": "BTPathMod.dll",
+  "DLLEntryPoint": "BTPathMod.BTSavePathMod.Start"
+}
