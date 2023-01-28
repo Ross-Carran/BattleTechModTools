@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using BattleTech;
 using BattleTech.Save.Core;
+using BTPathMod.Data;
 using HarmonyLib;
 using HBS.Logging;
 
@@ -47,18 +48,22 @@ namespace BTPathMod
         /**
          * This method generates the new path for the save folder
          * Currently This changes the path to the users BattleTech game folder then adds the user inputted folder
-         * resulting in somefilestructure\{battletechgamefolder}\{userdefinedsavefolder} system decides weather / or \ is used
+         * resulting in somefilestructure\{battletechgamefolder}\{userdefinedsavefolder}\{S0} system decides weather / or \ is used
          * Path.DirectorySeperatorChar is used to make sure the path is generated properly regardless of operating system.
-         * Cloud save Location is left unmodified as the game shits the bed if it is changed.
          * Will more then likely make a settings class to give more control over this process
          */
         public static GameInstance ChangeLocalSaveFolder(GameInstance game)
         {
-            var userDir = "ModSaves";
-            var strlocal = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + userDir + Path.DirectorySeparatorChar + SaveSystem.StandaloneFolder;
-            
-            game.SaveManager.saveSystem.localWriteLocation.rootPath = strlocal;
-
+            var userDir = "ModTest";
+            var test = Settings.rootSaveDir;
+            game.SaveManager.saveSystem.cloudWriteLocation.rootPath = Directory.GetCurrentDirectory() +
+                                                                      Path.DirectorySeparatorChar + userDir +
+                                                                      Path.DirectorySeparatorChar +
+                                                                      SaveSystem.CloudFolder;
+            game.SaveManager.saveSystem.localWriteLocation.rootPath = Directory.GetCurrentDirectory() +
+                                                                      Path.DirectorySeparatorChar + userDir +
+                                                                      Path.DirectorySeparatorChar + 
+                                                                      SaveSystem.StandaloneFolder;
             return game;
         }
     }
