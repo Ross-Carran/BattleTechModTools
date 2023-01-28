@@ -44,14 +44,7 @@ namespace BTPathMod
                 yield return t;
             }
         }
-        
-        /**
-         * This method generates the new path for the save folder
-         * Currently This changes the path to the users BattleTech game folder then adds the user inputted folder
-         * resulting in somefilestructure\{battletechgamefolder}\{userdefinedsavefolder}\{S0} system decides weather / or \ is used
-         * Path.DirectorySeperatorChar is used to make sure the path is generated properly regardless of operating system.
-         * Will more then likely make a settings class to give more control over this process
-         */
+
         public static GameInstance ChangeLocalSaveFolder(GameInstance game)
         {
             game.SaveManager.saveSystem.cloudWriteLocation.rootPath = PathStringGenerator(SaveSystem.CloudFolder);
