@@ -54,17 +54,20 @@ namespace BTPathMod
          */
         public static GameInstance ChangeLocalSaveFolder(GameInstance game)
         {
-            var userDir = "ModTest";
-            var test = Settings.rootSaveDir;
-            game.SaveManager.saveSystem.cloudWriteLocation.rootPath = Directory.GetCurrentDirectory() +
-                                                                      Path.DirectorySeparatorChar + userDir +
-                                                                      Path.DirectorySeparatorChar +
-                                                                      SaveSystem.CloudFolder;
-            game.SaveManager.saveSystem.localWriteLocation.rootPath = Directory.GetCurrentDirectory() +
-                                                                      Path.DirectorySeparatorChar + userDir +
-                                                                      Path.DirectorySeparatorChar + 
-                                                                      SaveSystem.StandaloneFolder;
+            game.SaveManager.saveSystem.cloudWriteLocation.rootPath = PathStringGenerator(SaveSystem.CloudFolder);
+            game.SaveManager.saveSystem.localWriteLocation.rootPath = PathStringGenerator(SaveSystem.StandaloneFolder);
             return game;
+        }
+
+        public static string PathStringGenerator(string saveSystemFolderPath)
+        {
+            return Directory.GetCurrentDirectory() +
+                   Path.DirectorySeparatorChar +
+                   Settings.RootSaveDir +
+                   Path.DirectorySeparatorChar +
+                   Settings.UserDefinedDirectory +
+                   Path.DirectorySeparatorChar +
+                   saveSystemFolderPath;
         }
     }
 }
