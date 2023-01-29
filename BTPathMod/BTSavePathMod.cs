@@ -61,12 +61,38 @@ namespace BTPathMod
         [HarmonyPatch(typeof(ProfileManager), nameof(ProfileManager.LoadSaveData))]
         [HarmonyTranspiler]
         [HarmonyAfter("io.github.ross-carran.BattleTechTools")]
-        static IEnumerable<CodeInstruction> Transpiler3(IEnumerable<CodeInstruction> instructions)
+        static IEnumerable<CodeInstruction> Transpiler3(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
         {
             var codes = new List<CodeInstruction>(instructions);
+            Label newLoc1 = generator.DefineLabel();
+            Label newLoc2 = generator.DefineLabel();
+            for (var i = 0; i < codes.Count; i++)
+            {
+                if (codes[i].ToString().Contains("call static bool BattleTech.DebugBridge::get_TestToolsEnabled()") && 
+                    codes[i + 1].ToString().Contains("brfalse"))
+                {
+                    codes[i + 1] = new CodeInstruction(OpCodes.Brfalse, newLoc1);
+                }
+
+                if (codes[i].ToString().Contains("call static bool string::IsNullOrEmpty(string value)") &&
+                    codes[i + 1].ToString().Contains("brtrue"))
+                {
+                    codes[i + 1] = new CodeInstruction(OpCodes.Brtrue, newLoc2);
+                }
+
+                if (codes[i].ToString()
+                    .Contains("call static string UnityEngine.Application::get_persistentDataPath()"))
+                {
+                    MethodInfo myMeth = SymbolExtensions.GetMethodInfo((() => Settings.RootSaveDirPath()));
+                    codes [i] = new CodeInstruction(OpCodes.Call, myMeth);
+                    codes[i].labels.Add(newLoc1);
+                    codes[i].labels.Add(newLoc2);
+                }
+            }
             return codes;
         }
 
+        
         [HarmonyPatch(typeof(ProfileManager), nameof(ProfileManager.ClearProfiles))]
         [HarmonyTranspiler]
         [HarmonyAfter("io.github.ross-carran.BattleTechTools")]
@@ -101,9 +127,10 @@ namespace BTPathMod
                 {
                     MethodInfo myMeth = SymbolExtensions.GetMethodInfo((() => Settings.RootSaveDirPath()));
                     codes [i] = new CodeInstruction(OpCodes.Call, myMeth);
-                    s_log.Log("target Found");
+                    //s_log.Log("target Found");
+                    
                 }
-                s_log.Log(codes[i].ToString());
+                //s_log.Log(codes[i].ToString());
             }
             return codes;
         }
