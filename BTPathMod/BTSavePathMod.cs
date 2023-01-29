@@ -24,6 +24,7 @@ namespace BTPathMod
             s_log.Log("Started");
         }
         
+        
         /**
          * Transpiler that redirects Gameinstance Initialisation so it goes through ChangeLocalSaveFolder First
          */
@@ -51,7 +52,8 @@ namespace BTPathMod
         [HarmonyAfter("io.github.ross-carran.BattleTechTools")]
         static IEnumerable<CodeInstruction> Transpiler2(IEnumerable<CodeInstruction> instructions)
         {
-            
+            var codes = new List<CodeInstruction>();
+            return codes;
         }
 
         [HarmonyPatch(typeof(ProfileManager), nameof(ProfileManager.LoadSaveData))]
@@ -59,7 +61,8 @@ namespace BTPathMod
         [HarmonyAfter("io.github.ross-carran.BattleTechTools")]
         static IEnumerable<CodeInstruction> Transpiler3(IEnumerable<CodeInstruction> instructions)
         {
-            
+            var codes = new List<CodeInstruction>();
+            return codes; 
         }
 
         [HarmonyPatch(typeof(ProfileManager), nameof(ProfileManager.ClearProfiles))]
@@ -67,7 +70,8 @@ namespace BTPathMod
         [HarmonyAfter("io.github.ross-carran.BattleTechTools")]
         static IEnumerable<CodeInstruction> Transpiler4(IEnumerable<CodeInstruction> instruction)
         {
-            
+            var codes = new List<CodeInstruction>();
+            return codes;       
         }
 
         public static GameInstance ChangeLocalSaveFolder(GameInstance game)
