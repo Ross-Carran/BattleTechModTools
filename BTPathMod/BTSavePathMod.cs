@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
 using BattleTech;
+using BattleTech.Save;
 using BattleTech.Save.Core;
 using BTPathMod.Data;
 using HarmonyLib;
@@ -45,6 +46,30 @@ namespace BTPathMod
             }
         }
 
+        [HarmonyPatch(typeof(ProfileManager), nameof(ProfileManager.Save))]
+        [HarmonyTranspiler]
+        [HarmonyAfter("io.github.ross-carran.BattleTechTools")]
+        static IEnumerable<CodeInstruction> Transpiler2(IEnumerable<CodeInstruction> instructions)
+        {
+            
+        }
+
+        [HarmonyPatch(typeof(ProfileManager), nameof(ProfileManager.LoadSaveData))]
+        [HarmonyTranspiler]
+        [HarmonyAfter("io.github.ross-carran.BattleTechTools")]
+        static IEnumerable<CodeInstruction> Transpiler3(IEnumerable<CodeInstruction> instructions)
+        {
+            
+        }
+
+        [HarmonyPatch(typeof(ProfileManager), nameof(ProfileManager.ClearProfiles))]
+        [HarmonyTranspiler]
+        [HarmonyAfter("io.github.ross-carran.BattleTechTools")]
+        static IEnumerable<CodeInstruction> Transpiler4(IEnumerable<CodeInstruction> instruction)
+        {
+            
+        }
+
         public static GameInstance ChangeLocalSaveFolder(GameInstance game)
         {
             game.SaveManager.saveSystem.cloudWriteLocation.rootPath = PathStringGenerator(SaveSystem.CloudFolder);
@@ -54,9 +79,7 @@ namespace BTPathMod
 
         public static string PathStringGenerator(string saveSystemFolderPath)
         {
-            return Directory.GetCurrentDirectory() +
-                   Path.DirectorySeparatorChar +
-                   Settings.RootSaveDir +
+            return Settings.RootSaveDirPath +
                    Path.DirectorySeparatorChar +
                    Settings.UserDefinedDirectory +
                    Path.DirectorySeparatorChar +
