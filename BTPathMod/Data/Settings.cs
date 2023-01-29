@@ -6,6 +6,10 @@ namespace BTPathMod.Data
     {
         private static string RootSaveDir = "GameSaves";
         public static string UserDefinedDirectory = "MyTest3";
-        public static string RootSaveDirPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + RootSaveDir;
+
+        public static string RootSaveDirPath()
+        {
+            return Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + RootSaveDir;
+        } 
     }
 }
