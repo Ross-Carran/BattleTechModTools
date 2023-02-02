@@ -5,7 +5,7 @@ namespace BTPathMod.Data
     public static class Settings
     {
         private static string RootSaveDir = "GameSaves";
-        public static string UserDefinedDirectory = "MyTest3";
+        public static string UserDefinedDirectory = "Player-Fatigue-Testing";
 
         public static string RootSaveDirPath()
         {
