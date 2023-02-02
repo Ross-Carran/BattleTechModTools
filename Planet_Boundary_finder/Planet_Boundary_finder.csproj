@@ -5,4 +5,10 @@
         <TargetFramework>net472</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Reference Include="Newtonsoft.Json">
+        <HintPath>..\..\..\Games\battletech\BattleTech_Data\Managed\Newtonsoft.Json.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>
